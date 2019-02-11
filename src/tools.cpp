@@ -19,6 +19,8 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd>& estimations,
 	/**
 	 * TODO: Calculate the RMSE here.
 	 */
+	VectorXd r;
+	return r;
 }
 
 MatrixXd Tools::CalculateJacobian(const VectorXd& x_state)

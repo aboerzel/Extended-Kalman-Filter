@@ -62,7 +62,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage& measurement_pack)
 				0, 0, 0, 1000;
 
 		// first measurement
-		cout << "EKF: " << endl;
+		cout << "Initialization" << endl;
 		auto state = VectorXd(4);
 
 		if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR)
@@ -77,7 +77,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage& measurement_pack)
 		else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER)
 		{
 			// Initialize state.
-			state << measurement_pack.raw_measurements_[0], measurement_pack.raw_measurements_[1], 0, 0;
+			state << measurement_pack.raw_measurements_(0), measurement_pack.raw_measurements_(1), 0, 0;
 		}
 		else
 		{
