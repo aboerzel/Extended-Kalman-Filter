@@ -61,8 +61,8 @@ void KalmanFilter::UpdateEKF(const VectorXd& z, const MatrixXd& R)
     }
 
     // measurement matrix - radar
-    auto H_radar = tools.CalculateJacobian(x_);
-    UpdateInnovation(y, R, H_radar);
+    auto Hj = tools.CalculateJacobian(x_);
+    UpdateInnovation(y, R, Hj);
 }
 
 void KalmanFilter::UpdateInnovation(const VectorXd& y, const MatrixXd& R, const MatrixXd& H)
