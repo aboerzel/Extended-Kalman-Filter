@@ -37,9 +37,7 @@ FusionEKF::FusionEKF()
 /**
  * Destructor.
  */
-FusionEKF::~FusionEKF()
-{
-}
+FusionEKF::~FusionEKF() {}
 
 void FusionEKF::ProcessMeasurement(const MeasurementPackage& measurement_pack)
 {
@@ -118,7 +116,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage& measurement_pack)
          dt_3_2 * noise_ax, 0, dt_2 * noise_ax, 0,
          0, dt_3_2 * noise_ay, 0, dt_2 * noise_ay;
 
-    auto state = ekf_.Predict(F, Q);
+    ekf_.Predict(F, Q);
 
     /**
      * Update

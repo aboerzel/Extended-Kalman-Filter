@@ -29,25 +29,25 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state)
         return Hj;
     }
 
-    //recover state parameters
+    // recover state parameters
     auto px = x_state(0);
     auto py = x_state(1);
     auto vx = x_state(2);
     auto vy = x_state(3);
 
-    //pre-compute a set of terms to avoid repeated calculation
+    // pre-compute a set of terms to avoid repeated calculation
     auto c1 = px * px + py * py;
     auto c2 = sqrt(c1);
     auto c3 = (c1 * c2);
 
-    //check division by zero
+    // check division by zero
     if (fabs(c1) < 0.0001)
     {
         std::cout << "ERROR - CalculateJacobian () - Division by Zero" << std::endl;
         return Hj;
     }
 
-    //compute the Jacobian matrix
+    // compute the Jacobian matrix
     Hj << (px / c2), (py / c2), 0, 0,
           -(py / c1), (px / c1), 0, 0,
           py * (vx * py - vy * px) / c3, px * (px * vy - py * vx) / c3, px / c2, py / c2;

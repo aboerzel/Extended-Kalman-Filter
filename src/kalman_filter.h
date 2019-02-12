@@ -27,9 +27,8 @@ public:
 	 * Prediction Predicts the state and the state covariance using the process model
 	 * @param F Transition matrix
 	 * @param Q Process covariance matrix
-	 * @return predicted state
 	 */
-	const Eigen::VectorXd& Predict(const Eigen::MatrixXd& F, const Eigen::MatrixXd& Q);
+	void Predict(const Eigen::MatrixXd& F, const Eigen::MatrixXd& Q);
 
 	/**
 	 * Updates the state by using standard Kalman Filter equations

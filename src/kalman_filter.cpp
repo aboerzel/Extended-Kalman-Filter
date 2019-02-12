@@ -17,12 +17,11 @@ void KalmanFilter::Init(VectorXd& x_in, MatrixXd& P_in)
     I_ = MatrixXd::Identity(x_.size(), x_.size());
 }
 
-const VectorXd& KalmanFilter::Predict(const MatrixXd& F, const MatrixXd& Q)
+void KalmanFilter::Predict(const MatrixXd& F, const MatrixXd& Q)
 {
     // predict the state
     x_ = (F * x_);
     P_ = F * P_ * F.transpose() + Q;
-    return x_;
 }
 
 void KalmanFilter::Update(const VectorXd& z, const MatrixXd& R, const MatrixXd& H)
