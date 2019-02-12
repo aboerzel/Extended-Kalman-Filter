@@ -18,22 +18,22 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd>& estimations, const vector<
     return r;
 }
 
-MatrixXd Tools::CalculateJacobian(const VectorXd& x)
+MatrixXd Tools::CalculateJacobian(const VectorXd& x_state)
 {
     // Calculate a Jacobian here.
     MatrixXd Hj(3, 4);
 
-    if (x.size() != 4)
+    if (x_state.size() != 4)
     {
         std::cout << "ERROR - CalculateJacobian () - The state vector must have size 4." << std::endl;
         return Hj;
     }
 
     //recover state parameters
-    auto px = x(0);
-    auto py = x(1);
-    auto vx = x(2);
-    auto vy = x(3);
+    auto px = x_state(0);
+    auto py = x_state(1);
+    auto vx = x_state(2);
+    auto vy = x_state(3);
 
     //pre-compute a set of terms to avoid repeated calculation
     auto c1 = px * px + py * py;

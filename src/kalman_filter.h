@@ -1,7 +1,6 @@
 #ifndef KALMAN_FILTER_H_
 #define KALMAN_FILTER_H_
 
-#include "Eigen/Dense"
 #include "tools.h"
 
 class KalmanFilter
@@ -63,7 +62,7 @@ private:
 	void UpdateInnovation(const Eigen::VectorXd& y, const Eigen::MatrixXd& R, const Eigen::MatrixXd& H);
 
 	// state vector
-	Eigen::VectorXd state_;
+	Eigen::VectorXd x_;
 
 	// state covariance matrix
 	Eigen::MatrixXd P_;

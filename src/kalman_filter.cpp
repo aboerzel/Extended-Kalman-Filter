@@ -10,35 +10,35 @@ KalmanFilter::~KalmanFilter() {}
 
 void KalmanFilter::Init(VectorXd& x_in, MatrixXd& P_in)
 {
-    state_ = x_in;
+    x_ = x_in;
     P_ = P_in;
 
     // create identity matrix
-    I_ = MatrixXd::Identity(state_.size(), state_.size());
+    I_ = MatrixXd::Identity(x_.size(), x_.size());
 }
 
 const VectorXd& KalmanFilter::Predict(const MatrixXd& F, const MatrixXd& Q)
 {
     // predict the state
-    state_ = (F * state_);
+    x_ = (F * x_);
     P_ = F * P_ * F.transpose() + Q;
-    return state_;
+    return x_;
 }
 
 void KalmanFilter::Update(const VectorXd& z, const MatrixXd& R, const MatrixXd& H)
 {
     // update the state by using Kalman Filter equations
-    VectorXd y = z - (H * state_);
+    VectorXd y = z - (H * x_);
     UpdateInnovation(y, R, H);
 }
 
 void KalmanFilter::UpdateEKF(const VectorXd& z, const MatrixXd& R)
 {
     // update the state by using Extended Kalman Filter equations
-    auto px = state_(0);
-    auto py = state_(1);
-    auto vx = state_(2);
-    auto vy = state_(3);
+    auto px = x_(0);
+    auto py = x_(1);
+    auto vx = x_(2);
+    auto vy = x_(3);
 
     auto rho = sqrt(px * px + py * py);
     auto theta = atan2(py, px);
@@ -62,7 +62,7 @@ void KalmanFilter::UpdateEKF(const VectorXd& z, const MatrixXd& R)
     }
 
     // measurement matrix - radar
-    auto H_radar = tools.CalculateJacobian(state_);
+    auto H_radar = tools.CalculateJacobian(x_);
     UpdateInnovation(y, R, H_radar);
 }
 
@@ -71,13 +71,13 @@ void KalmanFilter::UpdateInnovation(const VectorXd& y, const MatrixXd& R, const 
     MatrixXd S = H * P_ * H.transpose() + R;
     MatrixXd K = P_ * H.transpose() * S.inverse();
 
-    state_ = state_ + (K * y);
+    x_ = x_ + (K * y);
     P_ = (I_ - (K * H)) * P_;
 }
 
 Eigen::VectorXd KalmanFilter::GetState()
 {
-    return state_;
+    return x_;
 }
 
 Eigen::MatrixXd KalmanFilter::GetP()
