@@ -10,6 +10,7 @@ KalmanFilter::~KalmanFilter() {}
 
 void KalmanFilter::Init(VectorXd& x_in, MatrixXd& P_in)
 {
+    // initialize state and state covariance matrices
     x_ = x_in;
     P_ = P_in;
 
@@ -67,6 +68,7 @@ void KalmanFilter::UpdateEKF(const VectorXd& z, const MatrixXd& R)
 
 void KalmanFilter::UpdateInnovation(const VectorXd& y, const MatrixXd& R, const MatrixXd& H)
 {
+    // update the state and state covariance matrix with innovation y
     MatrixXd Ht = H.transpose();
     MatrixXd S = H * P_ * Ht + R;
     MatrixXd K = P_ * Ht * S.inverse();

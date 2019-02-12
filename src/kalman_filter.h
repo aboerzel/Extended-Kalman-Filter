@@ -26,23 +26,23 @@ public:
 	/**
 	 * Prediction Predicts the state and the state covariance using the process model
 	 * @param F Transition matrix
-	 * @param Q Process covariance matrix
+	 * @param Q Process noise covariance matrix
 	 */
 	void Predict(const Eigen::MatrixXd& F, const Eigen::MatrixXd& Q);
 
 	/**
 	 * Updates the state by using standard Kalman Filter equations
 	 * @param z The measurement at k+1
-	 * @param R Measurement covariance matrix at k+1
-	 * @param H Measurement matrix at k+1
+	 * @param R Measurement noise covariance matrix at k+1
+	 * @param H Measurement matrix
 	 */
 	void Update(const Eigen::VectorXd& z, const Eigen::MatrixXd& R, const Eigen::MatrixXd& H);
 
 	/**
 	 * Updates the state by using Extended Kalman Filter equations
 	 * @param z The measurement at k+1
-	 * @param R Measurement covariance matrix at k+1
-	 * @param H Measurement matrix at k+1
+	 * @param R Measurement noise covariance matrix
+	 * @param H Measurement matrix
 	 */
 	void UpdateEKF(const Eigen::VectorXd& z, const Eigen::MatrixXd& R);
 
@@ -58,6 +58,12 @@ public:
 
 private:
 
+    /**
+     * Updates the state and the state covariance matrix
+	 * @param y The innovation at k+1
+	 * @param R Measurement noise covariance matrix
+	 * @param H Measurement matrix
+     */
 	void UpdateInnovation(const Eigen::VectorXd& y, const Eigen::MatrixXd& R, const Eigen::MatrixXd& H);
 
 	// state vector
