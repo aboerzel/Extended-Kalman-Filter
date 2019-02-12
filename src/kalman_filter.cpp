@@ -39,6 +39,7 @@ void KalmanFilter::UpdateEKF(const VectorXd& z, const MatrixXd& R)
     auto vx = x_(2);
     auto vy = x_(3);
 
+    // convert state to polar coordinates
     auto rho = sqrt(px * px + py * py);
     auto theta = atan2(py, px);
     auto rho_dot = (px * vx + py * vy) / rho;
@@ -48,6 +49,7 @@ void KalmanFilter::UpdateEKF(const VectorXd& z, const MatrixXd& R)
 
     VectorXd y = z - h;
 
+    // ensure theta change is between PI and -PI
     while (y(1) > M_PI || y(1) < -M_PI)
     {
         if (y(1) > M_PI)
@@ -60,15 +62,14 @@ void KalmanFilter::UpdateEKF(const VectorXd& z, const MatrixXd& R)
         }
     }
 
-    // measurement matrix - radar
-    auto Hj = tools.CalculateJacobian(x_);
-    UpdateInnovation(y, R, Hj);
+    UpdateInnovation(y, R, tools.CalculateJacobian(x_));
 }
 
 void KalmanFilter::UpdateInnovation(const VectorXd& y, const MatrixXd& R, const MatrixXd& H)
 {
-    MatrixXd S = H * P_ * H.transpose() + R;
-    MatrixXd K = P_ * H.transpose() * S.inverse();
+    MatrixXd Ht = H.transpose();
+    MatrixXd S = H * P_ * Ht + R;
+    MatrixXd K = P_ * Ht * S.inverse();
 
     x_ = x_ + (K * y);
     P_ = (I_ - (K * H)) * P_;
