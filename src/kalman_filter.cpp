@@ -29,7 +29,7 @@ void KalmanFilter::Update(const VectorXd& z, const MatrixXd& R, const MatrixXd& 
 {
     // update the state by using Kalman Filter equations
     VectorXd y = z - (H * state_);
-    Update(y, R, H);
+    UpdateInnovation(y, R, H);
 }
 
 void KalmanFilter::UpdateEKF(const VectorXd& z, const MatrixXd& R)
