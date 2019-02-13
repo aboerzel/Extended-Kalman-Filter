@@ -25,7 +25,7 @@ public:
 
 	/**
 	 * Prediction Predicts the state and the state covariance using the process model
-	 * @param F Transition matrix
+	 * @param F State transition matrix
 	 * @param Q Process noise covariance matrix
 	 */
 	void Predict(const Eigen::MatrixXd& F, const Eigen::MatrixXd& Q);
@@ -33,7 +33,7 @@ public:
 	/**
 	 * Updates the state by using standard Kalman Filter equations
 	 * @param z The measurement at k+1
-	 * @param R Measurement noise covariance matrix at k+1
+	 * @param R Measurement noise covariance matrix
 	 * @param H Measurement matrix
 	 */
 	void Update(const Eigen::VectorXd& z, const Eigen::MatrixXd& R, const Eigen::MatrixXd& H);
@@ -42,7 +42,6 @@ public:
 	 * Updates the state by using Extended Kalman Filter equations
 	 * @param z The measurement at k+1
 	 * @param R Measurement noise covariance matrix
-	 * @param H Measurement matrix
 	 */
 	void UpdateEKF(const Eigen::VectorXd& z, const Eigen::MatrixXd& R);
 
@@ -57,6 +56,13 @@ public:
 	Eigen::MatrixXd GetP();
 
 private:
+
+    /**
+     * Normalizes the given angle between PI and -PI
+     * @param angle Angle to be normalized
+     * @return Normalized angle
+     */
+    static double NormalizeAngle(double angle);
 
     /**
      * Updates the state and the state covariance matrix

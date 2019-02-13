@@ -50,20 +50,25 @@ void KalmanFilter::UpdateEKF(const VectorXd& z, const MatrixXd& R)
 
     VectorXd y = z - h;
 
-    // ensure theta change is between PI and -PI
-    while (y(1) > M_PI || y(1) < -M_PI)
-    {
-        if (y(1) > M_PI)
-        {
-            y(1) -= M_PI;
-        }
-        else
-        {
-            y(1) += M_PI;
-        }
-    }
+    // normalize theta change between PI and -PI
+    y(1) = NormalizeAngle(y(1));
 
     UpdateInnovation(y, R, tools.CalculateJacobian(x_));
+}
+
+double KalmanFilter::NormalizeAngle(double angle)
+{
+    while (angle > M_PI) 
+    {
+        angle -= M_PI;
+    }
+
+    while (angle < -M_PI) 
+    {
+        angle += M_PI;
+    }
+
+    return angle;
 }
 
 void KalmanFilter::UpdateInnovation(const VectorXd& y, const MatrixXd& R, const MatrixXd& H)
