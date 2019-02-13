@@ -73,6 +73,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage& measurement_pack)
         }
         else
         {
+            cout << "ERROR - ProcessMeasurement() - Unknown sensor type!" << endl;
             return;
         }
 
@@ -89,7 +90,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage& measurement_pack)
      * Prediction
      */
 
-    // Calculate time between two calls in seconds.
+    // Calculate time delta between two calls in seconds.
     auto dt = (measurement_pack.timestamp_ - previous_timestamp_) / 1000000.0;
     previous_timestamp_ = measurement_pack.timestamp_;
 
@@ -111,10 +112,10 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage& measurement_pack)
     auto dt_3_2 = dt_3 / 2; //dt^3/2
 
     auto Q = MatrixXd(4, 4);
-    Q << dt_4_4 * noise_ax, 0, dt_3_2 * noise_ax, 0,
-         0, dt_4_4 * noise_ay, 0, dt_3_2 * noise_ay,
-         dt_3_2 * noise_ax, 0, dt_2 * noise_ax, 0,
-         0, dt_3_2 * noise_ay, 0, dt_2 * noise_ay;
+    Q << dt_4_4 * noise_ax, 0,                 dt_3_2 * noise_ax, 0,
+         0,                 dt_4_4 * noise_ay, 0,                 dt_3_2 * noise_ay,
+         dt_3_2 * noise_ax, 0,                 dt_2 * noise_ax,   0,
+         0,                 dt_3_2 * noise_ay, 0,                 dt_2 * noise_ay;
 
     ekf_.Predict(F, Q);
 
@@ -134,6 +135,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage& measurement_pack)
     }
     else
     {
+        cout << "ERROR - ProcessMeasurement() - Unknown sensor type!" << endl;
         return;
     }
 
