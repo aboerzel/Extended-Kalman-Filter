@@ -121,8 +121,7 @@ int main()
                         // Call ProcessMeasurement(meas_package) for Kalman filter
                         fusionEKF.ProcessMeasurement(meas_package);
 
-                        // Push the current estimated x,y positon from the Kalman filter's 
-                        //   state vector
+                        // Push the current estimated x,y positon from the Kalman filter's state vector
                         VectorXd estimate(4);
                         estimate << fusionEKF.ekf_.GetState();
 
@@ -133,10 +132,10 @@ int main()
                         json msgJson;
                         msgJson["estimate_x"] = estimate(0);
                         msgJson["estimate_y"] = estimate(1);
-                        msgJson["rmse_x"] = 0; // RMSE(0);
-                        msgJson["rmse_y"] = 0; // RMSE(1);
-                        msgJson["rmse_vx"] = 0; // RMSE(2);
-                        msgJson["rmse_vy"] = 0; // RMSE(3);
+                        msgJson["rmse_x"] = RMSE(0);
+                        msgJson["rmse_y"] = RMSE(1);
+                        msgJson["rmse_vx"] = RMSE(2);
+                        msgJson["rmse_vy"] = RMSE(3);
                         auto msg = "42[\"estimate_marker\"," + msgJson.dump() + "]";
                         // std::cout << msg << std::endl;
                         ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
