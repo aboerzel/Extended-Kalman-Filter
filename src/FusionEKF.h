@@ -35,8 +35,13 @@ private:
     // previous timestamp
     long long previous_timestamp_;
 
+    // Measurement noise covariance matrix - laser
     Eigen::MatrixXd R_laser_;
+
+    // Measurement noise covariance matrix - radar
     Eigen::MatrixXd R_radar_;
+
+    // Measurement matrix - laser
     Eigen::MatrixXd H_laser_;
 };
 
