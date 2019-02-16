@@ -25,3 +25,5 @@ ide_profiles/xcode/ExtendedKF.build/
 
 #Visual Studio
 .vs
+*.sln
+*.vcxproj
