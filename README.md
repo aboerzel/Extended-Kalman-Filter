@@ -2,13 +2,13 @@
 
 #### Udacity Self Driving Car Engineer Nanodegree - Project 5
 
-## Overview
+### Overview
 
 In this project you will utilize a kalman filter to estimate the state of a moving object of interest with noisy lidar and radar measurements. Passing the project requires obtaining RMSE values that are lower than the tolerance outlined in the project rubric. 
 
 This project involves the Term 2 Simulator which can be downloaded [here](https://github.com/udacity/self-driving-car-sim/releases)
 
-## Prerequisites
+### Prerequisites
 To compile this project the following programming environment is required:
 
 * cmake >= 3.5
@@ -24,7 +24,7 @@ To compile this project the following programming environment is required:
   
 * [uWebSocketIO](https://github.com/uWebSockets/uWebSockets) library for either Linux or Mac systems. For windows you can use either Docker, VMware, or even [Windows 10 Bash on Ubuntu](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/) to install uWebSocketIO.
 
-## Compiling and executing
+### Compiling and executing
 Follow these instructions to compile and run this project:
 
 1. Clone this repo (https://github.com/aboerzel/Extended-Kalman-Filter.git).
@@ -33,7 +33,7 @@ Follow these instructions to compile and run this project:
    * On windows, you may need to run: `cmake .. -G "Unix Makefiles" && make`
 4. Run the project with: `./ExtendedKF `
 
-## Running the Extended Kalman Filter
+### Running the Extended Kalman Filter
 Follow these instructions to test the project:
 
 1. Run the Kalman filter project with command from the build subdirectory: `./ExtendedKF `
