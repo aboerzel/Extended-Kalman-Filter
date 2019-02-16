@@ -41,11 +41,11 @@ Follow these instructions to test the project:
 3. Select `Dataset 1` or `Dataset 2` and press the `Start` button.
 
 Example run of the project with dataset 1:
-[![](output/Dataset-1.jpg)](output/Dataset-1.mp4)
+[![](output/Dataset-1.jpg)](https://youtu.be/pFqO0cQmuOU)
 
 The resulting RMSE [.0973, .0855, 0.4513, 0.4399] is smaller than the max RMSE [.11, .11, 0.52, 0.52] from the [project rubric](https://review.udacity.com/#!/rubrics/748/view).
 
 Example run of the project with dataset 2:
-[![](output/Dataset-2.jpg)](output/Dataset-2.mp4)
+[![](output/Dataset-2.jpg)](https://youtu.be/eOe3gkz-CCo)
 
 The resulting RMSE is: [.0726, .0965, 0.4216, 0.4932].
