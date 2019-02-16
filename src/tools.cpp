@@ -15,18 +15,19 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd>& estimations, const vector<
     VectorXd rmse(4);
     rmse << 0, 0, 0, 0;
 
+    // check non empty and same size
     if (estimations.size() != ground_truth.size() || estimations.empty())
     {
         std::cout << "ERROR - CalculateRMSE() - Arguments invalid." << std::endl;
         return rmse;
     }
 
-    // accumulate squared errors
+    // accumulate squared residuals
     for (unsigned int i = 0; i < estimations.size(); ++i)
     {
-        VectorXd err = estimations[i] - ground_truth[i];
-        err = err.array() * err.array();
-        rmse += err;
+        VectorXd residual = estimations[i] - ground_truth[i];
+        residual = residual.array() * residual.array();
+        rmse += residual;
     }
 
     // calculate the RMSE
@@ -53,21 +54,21 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state)
     auto vy = x_state(3);
 
     // calculate some terms that are needed multiple times
-    auto t1 = px * px + py * py;
-    auto t2 = sqrt(t1);
-    auto t3 = (t1 * t2);
+    auto c1 = px * px + py * py;
+    auto c2 = sqrt(c1);
+    auto c3 = (c1 * c2);
 
-    // avoid division by zero
-    if (fabs(t1) < 0.0001)
+    // check division by zero
+    if (fabs(c1) < 0.0001)
     {
-        std::cout << "ERROR - CalculateJacobian () - Division by zero" << std::endl;
+        std::cout << "ERROR - CalculateJacobian () - Division by Zero" << std::endl;
         return Hj;
     }
 
     // compute the Jacobian matrix
-    Hj << (px / t2),                   (py / t2),                      0,       0,
-         -(py / t1),                   (px / t1),                      0,       0,
-         py * (vx * py - vy * px) / t3, px * (px * vy - py * vx) / t3, px / t2, py / t2;
+    Hj << (px / c2),                   (py / c2),                      0,       0,
+         -(py / c1),                   (px / c1),                      0,       0,
+         py * (vx * py - vy * px) / c3, px * (px * vy - py * vx) / c3, px / c2, py / c2;
 
     return Hj;
 }
